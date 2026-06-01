@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LJMSport — Premium Sports Gear</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ljmsport.css">
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">LJM<span>SPORT</span></div>
+    <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">✕</button>
+  </div>
+  <div class="sidebar-section">Navigate</div>
+  <div class="sidebar-item active" onclick="nav('home')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Home</div>
+  <div class="sidebar-item" onclick="nav('shop')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span> Shop All</div>
+  <div class="sidebar-item" onclick="nav('wishlist')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> Wishlist</div>
+  <div class="sidebar-item" onclick="nav('history')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span> My Orders</div>
+  <div class="sidebar-section">Account</div>
+  <div class="sidebar-item" id="sidebarAuthItem" onclick="nav('auth')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Sign In</div>
+  <div class="sidebar-item" onclick="nav('settings')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</div>
+  <div class="sidebar-section">Info</div>
+  <div class="sidebar-item" onclick="nav('contact')"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16h.19z"/></svg></span> Contact Us</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="hamburger" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="nav-logo" onclick="nav('home')">LJM<span>SPORT</span></div>
+  <div class="nav-search">
+    <label for="searchInput" class="sr-only">Search products</label>
+    <input type="text" placeholder="Search gear, brands, sports..." id="searchInput" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')handleSearch(this.value)">
+  </div>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="nav('wishlist')" aria-label="Wishlist">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+    <button class="nav-icon-btn nav-orders-btn" onclick="nav('history')" aria-label="My Orders">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      <span class="orders-nav-label">Orders</span>
+    </button>
+    <button class="nav-icon-btn" onclick="openCart()" aria-label="Open cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="badge" id="cartBadge">0</span>
+    </button>
+    <button class="btn-primary" id="navAuthBtn" onclick="nav('auth')">Sign In</button>
+  </div>
+</nav>
+
+
+
+<!-- MAIN -->
+<main>
+
+<!-- MOBILE SEARCH BAR (visible on small screens only) -->
+<div class="mobile-search-bar">
+  <input type="text" placeholder="Search gear, brands, sports..." id="mobileSearchInput" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')handleSearch(this.value)" aria-label="Search products">
+</div>
+
+  <!-- HOME VIEW -->
+  <div class="view active" id="view-home">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-accent"></div>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> NEW SEASON COLLECTION</div>
+        <div class="hero-title">GEAR UP.<br><span>PLAY HARD.</span></div>
+        <p class="hero-sub">Premium sports equipment, footwear & apparel — exclusively serving Misamis Occidental. Delivery to all 13 municipalities & 3 cities.</p>
+        <div class="hero-btns">
+          <button class="btn-primary btn-hero" onclick="nav('shop')">SHOP NOW →</button>
+          <button class="btn-secondary" onclick="document.getElementById('featured-section').scrollIntoView({behavior:'smooth'})">VIEW COLLECTION</button>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
+        <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Brands</div></div>
+        <div class="stat-item"><div class="stat-num">10K+</div><div class="stat-label">Happy Athletes</div></div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">SHOP BY SPORT</div>
+        <span class="section-link" onclick="nav('shop')">View All →</span>
+      </div>
+      <div class="cats-grid">
+        <div class="cat-card" onclick="filterAndNav('Football')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 6.88 2.75M12 2a10 10 0 0 0-6.88 2.75M2.75 17.12A10 10 0 0 1 2 12M21.25 17.12A10 10 0 0 0 22 12M8.5 21.5A10 10 0 0 0 12 22a10 10 0 0 0 3.5-.5"/><polygon points="12 7 14.5 10 12 13 9.5 10"/></svg></div><div class="cat-name">Football</div><div class="cat-count">12 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Basketball')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93a10 10 0 0 1 14.14 14.14M4.93 19.07A10 10 0 0 1 19.07 4.93"/><line x1="12" y1="2" x2="12" y2="22"/></svg></div><div class="cat-name">Basketball</div><div class="cat-count">10 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Running')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M7 22l3-7 3 3 2-4"/><path d="M10 15l-3 7"/><path d="M16 7l-2 4-4-1-3 3"/></svg></div><div class="cat-name">Running</div><div class="cat-count">14 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Boxing')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="12" height="10" rx="3"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M6 8V6a2 2 0 0 1 4 0v2"/></svg></div><div class="cat-name">Boxing</div><div class="cat-count">8 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Swimming')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><path d="M2 17c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><circle cx="12" cy="6" r="2"/><path d="M8 9l4-3 4 3"/></svg></div><div class="cat-name">Swimming</div><div class="cat-count">6 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Tennis')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12c3.3 0 6-4 6-10M22 12c-3.3 0-6 4-6 10M2 12c3.3 0 6 4 6 10M22 12c-3.3 0-6-4-6-10"/></svg></div><div class="cat-name">Tennis</div><div class="cat-count">7 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Fitness')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6M18 4v6M3 9h18M3 15h18M6 14v6M18 14v6"/></svg></div><div class="cat-name">Fitness</div><div class="cat-count">20 items</div></div>
+        <div class="cat-card" onclick="filterAndNav('Cycling')"><div class="cat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5L9 11l4-2 2 4h5"/></svg></div><div class="cat-name">Cycling</div><div class="cat-count">9 items</div></div>
+      </div>
+    </div>
+
+    <!-- FEATURED PRODUCTS -->
+    <div class="section" id="featured-section">
+      <div class="section-header">
+        <div class="section-title">FEATURED GEAR</div>
+        <span class="section-link" onclick="nav('shop')">See all →</span>
+      </div>
+      <div class="products-grid" id="featuredGrid"></div>
+    </div>
+
+    <!-- PROMO BANNER -->
+    <div class="promo-banner">
+      <div class="promo-text">
+        <div class="promo-label">LIMITED TIME</div>
+        <div class="promo-title">FREE SHIPPING ON ORDERS ₱1,500+</div>
+        <div class="promo-sub">Use code <strong>LJMFREE</strong> at checkout · Valid until Dec 31</div>
+      </div>
+      <button class="btn-primary btn-promo" onclick="nav('shop')">SHOP DEALS →</button>
+    </div>
+
+    <!-- NEW ARRIVALS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">NEW ARRIVALS</div>
+        <span class="section-link" onclick="nav('shop')">See all →</span>
+      </div>
+      <div class="products-grid" id="newGrid"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">LJM<span>SPORT</span></div>
+          <p class="footer-desc">Your premier sports store exclusively serving Misamis Occidental — Ozamiz, Oroquieta, Tangub & all municipalities. Quality gear for every athlete.</p>
+          <div class="footer-socials">
+            <span class="footer-social-icon" onclick="openSocial('Facebook')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>
+            <span class="footer-social-icon" onclick="openSocial('Instagram')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>
+            <span class="footer-social-icon" onclick="openSocial('TikTok')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></span>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Shop</div>
+          <div class="footer-links">
+            <a onclick="filterAndNav('Football')">Football</a>
+            <a onclick="filterAndNav('Basketball')">Basketball</a>
+            <a onclick="filterAndNav('Running')">Running</a>
+            <a onclick="filterAndNav('Fitness')">Fitness</a>
+            <a onclick="nav('shop')">All Products</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Account</div>
+          <div class="footer-links">
+            <a onclick="nav('auth')">Sign In / Register</a>
+            <a onclick="nav('history')">My Orders</a>
+            <a onclick="nav('wishlist')">Wishlist</a>
+            <a onclick="nav('settings')">Settings</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Help</div>
+          <div class="footer-links">
+            <a onclick="nav('contact')">Contact Us</a>
+            <a>Returns & Refunds</a>
+            <a>Shipping Info</a>
+            <a>Size Guide</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 LJMSport. All rights reserved. Exclusively serving Misamis Occidental, PH. 🛵 Delivery to Ozamiz · Oroquieta · Tangub & all municipalities.</p>
+        <div class="footer-bottom-links">
+          <a class="footer-policy-link">Privacy Policy</a>
+          <a class="footer-policy-link">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SHOP VIEW -->
+  <div class="view" id="view-shop">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">ALL PRODUCTS</div>
+        <div id="shopCount" class="shop-count"></div>
+      </div>
+      <div class="products-toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="filterShop('all',this)">All</button>
+          <button class="filter-tab" onclick="filterShop('Football',this)">Football</button>
+          <button class="filter-tab" onclick="filterShop('Basketball',this)">Basketball</button>
+          <button class="filter-tab" onclick="filterShop('Running',this)">Running</button>
+          <button class="filter-tab" onclick="filterShop('Boxing',this)">Boxing</button>
+          <button class="filter-tab" onclick="filterShop('Swimming',this)">Swimming</button>
+          <button class="filter-tab" onclick="filterShop('Tennis',this)">Tennis</button>
+          <button class="filter-tab" onclick="filterShop('Fitness',this)">Fitness</button>
+          <button class="filter-tab" onclick="filterShop('Cycling',this)">Cycling</button>
+        </div>
+        <label for="sortSelect" class="sr-only">Sort products</label>
+        <select id="sortSelect" class="sort-select" onchange="sortShop(this.value)" title="Sort products" aria-label="Sort products">
+          <option value="default">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+      <div class="products-grid" id="shopGrid"></div>
+    </div>
+  </div>
+
+  <!-- SEARCH VIEW -->
+  <div class="view" id="view-search">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title" id="searchTitle">SEARCH RESULTS</div>
+      </div>
+      <div class="products-grid" id="searchGrid"></div>
+    </div>
+  </div>
+
+  <!-- AUTH VIEW -->
+  <div class="view" id="view-auth">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-text">LJM<span>SPORT</span></div>
+        </div>
+        <p class="auth-subtitle">Sign in to track orders, save favorites & checkout faster</p>
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Sign In</div>
+          <div class="auth-tab" id="tab-register" onclick="switchAuth('register')">Register</div>
+        </div>
+        <!-- Login -->
+        <div id="loginForm" class="auth-form">
+          <div class="form-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="form-group"><label for="loginPass">Password</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="forgot-link">Forgot password?</div>
+          <button class="btn-primary btn-auth" onclick="doLogin()">SIGN IN →</button>
+          <div class="social-divider">or continue with</div>
+          <div class="social-btns">
+            <button class="social-btn" onclick="quickLogin('Google')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Google</button>
+            <button class="social-btn" onclick="quickLogin('Facebook')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</button>
+          </div>
+        </div>
+        <!-- Register -->
+        <div id="registerForm" class="auth-form" style="display:none">
+          <div class="form-grid-2col">
+            <div class="form-group"><label for="regFirst">First Name</label><input type="text" id="regFirst" placeholder="Juan" oninput="this.value=this.value.replace(/[^a-zA-Z\s\-\'\.]/g,'')" onkeydown="if(event.key==='Enter')doRegister()"></div>
+            <div class="form-group"><label for="regLast">Last Name</label><input type="text" id="regLast" placeholder="Dela Cruz" oninput="this.value=this.value.replace(/[^a-zA-Z\s\-\'\.]/g,'')" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          </div>
+          <div class="form-group"><label for="regEmail">Email</label><input type="email" id="regEmail" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          <div class="form-group"><label for="regPass">Password</label><input type="password" id="regPass" placeholder="Min 8 characters" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          <div class="form-group"><label for="regPass2">Confirm Password</label><input type="password" id="regPass2" placeholder="Repeat password" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          <button class="btn-primary btn-auth" onclick="doRegister()">CREATE ACCOUNT →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT VIEW -->
+  <div class="view" id="view-checkout">
+    <div class="checkout-layout">
+      <div class="checkout-heading">CHECKOUT</div>
+
+      <!-- Left: form column -->
+      <div class="checkout-form-col">
+        <!-- Delivery Address -->
+        <div class="form-section">
+          <div class="form-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-title-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Delivery Address</div>
+          <div class="delivery-scope-note">🛵 Delivering within <strong>Misamis Occidental</strong> only.</div>
+          <div class="form-grid">
+            <div class="form-group"><label for="ckFirst">First Name</label><input type="text" id="ckFirst" placeholder="First Name" oninput="this.value=this.value.replace(/[^a-zA-Z\s\-\'\.]/g,'')"></div>
+            <div class="form-group"><label for="ckLast">Last Name</label><input type="text" id="ckLast" placeholder="Last Name" oninput="this.value=this.value.replace(/[^a-zA-Z\s\-\'\.]/g,'')"></div>
+            <div class="form-group full">
+              <label for="ckMunicipality">City / Municipality</label>
+              <select id="ckMunicipality" onchange="onMunicipalityChange()" title="Select city or municipality">
+                <option value="">— Select City / Municipality —</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="ckBarangaySearch">Barangay</label>
+              <div class="brgy-search-wrap" id="brgySearchWrap">
+                <input type="text" id="ckBarangaySearch" placeholder="Search barangay..." autocomplete="off" oninput="onBarangaySearch(this.value)" onfocus="onBarangaySearch(this.value)" disabled>
+                <div class="brgy-dropdown" id="brgyDropdown"></div>
+              </div>
+              <select id="ckBarangay" onchange="onBarangayChange()" title="Select barangay" disabled style="display:none">
+                <option value="">— Select Barangay —</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="ckPurok">Purok / Sitio <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+              <select id="ckPurok" title="Select purok or sitio" disabled>
+                <option value="">— Select Purok / Sitio —</option>
+              </select>
+            </div>
+            <div class="form-group"><label for="ckStreet">House No. / Street <span style="color:var(--muted);font-weight:400">(optional)</span></label><input type="text" id="ckStreet" placeholder="e.g. 123 Rizal St."></div>
+            <div class="form-group"><label for="ckPhone">Phone</label><input type="tel" id="ckPhone" placeholder="+63 9XX XXX XXXX"></div>
+            <input type="hidden" id="ckAddr">
+            <input type="hidden" id="ckCity">
+            <input type="hidden" id="ckZip">
+            <div class="form-group full" id="ckZipRow" style="display:none">
+              <label>Zip Code</label>
+              <div class="addr-readonly-chip" id="ckZipDisplay">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-section">
+          <div class="form-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-title-icon"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Payment Method</div>
+          <div class="payment-methods">
+            <div class="pay-opt" onclick="selectPay(this)" data-pay="card"><div class="pay-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>Credit Card</div>
+            <div class="pay-opt" onclick="selectPay(this)" data-pay="gcash"><div class="pay-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>GCash</div>
+            <div class="pay-opt active" onclick="selectPay(this)" data-pay="cod"><div class="pay-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Cash on Delivery</div>
+            <div class="pay-opt" onclick="selectPay(this)" data-pay="paypal"><div class="pay-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l5-9h5a5 5 0 0 1 0 10H9"/><path d="M5 21l3-10h4a5 5 0 0 1 0 10H5"/></svg></div>PayPal</div>
+          </div>
+          <div id="cardFields" style="display:none">
+            <div class="form-grid">
+              <div class="form-group full"><label for="ckCardNum">Card Number</label><input type="text" id="ckCardNum" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+              <div class="form-group"><label for="ckExpiry">Expiry</label><input type="text" id="ckExpiry" placeholder="MM / YY"></div>
+              <div class="form-group"><label for="ckCvv">CVV</label><input type="text" id="ckCvv" placeholder="•••" maxlength="4"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-place-order" onclick="placeOrder()">PLACE ORDER →</button>
+      </div>
+
+      <!-- Right: order summary — sticky, always fully visible -->
+      <div class="checkout-summary-col">
+        <div class="order-summary">
+          <div class="order-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Order Summary
+          </div>
+          <div id="checkoutItems"></div>
+          <div class="order-summary-totals">
+            <div class="cart-row"><span>Subtotal</span><span id="ckSubtotal">₱0</span></div>
+            <div class="cart-row"><span>Shipping</span><span class="text-success">FREE</span></div>
+            <div class="cart-row"><span>Tax (12%)</span><span id="ckTax">₱0</span></div>
+            <div class="cart-row total"><span>TOTAL</span><span id="ckTotal" class="text-accent">₱0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS -->
+  <div class="view" id="view-success">
+    <div class="success-screen">
+      <div class="success-icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></div>
+      <div class="success-title">ORDER PLACED!</div>
+      <p class="success-sub">Your gear is on its way! Thank you for choosing LJMSport!</p>
+      <div class="order-code" id="successOrderCode">#LJM-000000</div>
+      <div class="success-btns">
+        <button class="btn-primary btn-success-action" onclick="nav('history')">VIEW ORDER STATUS →</button>
+        <button class="btn-secondary btn-success-action" onclick="nav('home')">CONTINUE SHOPPING</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER HISTORY -->
+  <div class="view" id="view-history">
+    <div class="page-container">
+      <div class="page-title">ORDER HISTORY</div>
+      <p class="page-sub">Track and manage your past purchases</p>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <!-- WISHLIST VIEW -->
+  <div class="view" id="view-wishlist">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">MY WISHLIST</div>
+      </div>
+      <div class="products-grid" id="wishlistGrid"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div class="view" id="view-settings">
+    <div class="settings-layout">
+      <div class="settings-nav">
+        <div class="settings-nav-item active" onclick="switchSettings('profile',this)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+        <div class="settings-nav-item" onclick="switchSettings('notifications',this)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</div>
+        <div class="settings-nav-item" onclick="switchSettings('privacy',this)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Privacy</div>
+        <div class="settings-nav-item" onclick="switchSettings('appearance',this)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Appearance</div>
+        <div class="settings-nav-item" onclick="switchSettings('addresses',this)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Addresses</div>
+      </div>
+      <div>
+        <div class="settings-panel active" id="settings-profile">
+          <div id="profileHeader"></div>
+          <div class="settings-section">
+            <div class="settings-section-title">Personal Information</div>
+            <div class="form-grid">
+              <div class="form-group"><label for="settFirst">First Name</label><input type="text" id="settFirst" placeholder="First Name"></div>
+              <div class="form-group"><label for="settLast">Last Name</label><input type="text" id="settLast" placeholder="Last Name"></div>
+              <div class="form-group full"><label for="settEmail">Email</label><input type="email" id="settEmail" placeholder="email@example.com"></div>
+              <div class="form-group"><label for="settPhone">Phone</label><input type="tel" id="settPhone" placeholder="+63 9XX XXX XXXX"></div>
+              <div class="form-group"><label for="settBday">Birthday</label><input type="text" id="settBday" placeholder="MM/DD/YYYY"></div>
+            </div>
+            <button class="btn-primary btn-save-profile" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+        <div class="settings-panel" id="settings-notifications">
+          <div class="settings-section">
+            <div class="settings-section-title">Notification Preferences</div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Order Updates</h4><p>Get notified when your order status changes</p></div><label class="toggle"><input type="checkbox" aria-label="Order Updates" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Promotions & Deals</h4><p>Exclusive deals and seasonal discounts</p></div><label class="toggle"><input type="checkbox" aria-label="Promotions and Deals" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>New Arrivals</h4><p>Be the first to know about new products</p></div><label class="toggle"><input type="checkbox" aria-label="New Arrivals"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Wishlist Alerts</h4><p>Notify when wishlist items go on sale</p></div><label class="toggle"><input type="checkbox" aria-label="Wishlist Alerts" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Newsletter</h4><p>Weekly sports tips and gear guides</p></div><label class="toggle"><input type="checkbox" aria-label="Newsletter"><span class="toggle-slider"></span></label></div>
+          </div>
+        </div>
+        <div class="settings-panel" id="settings-privacy">
+          <div class="settings-section">
+            <div class="settings-section-title">Privacy & Security</div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Two-Factor Authentication</h4><p>Extra security for your account</p></div><label class="toggle"><input type="checkbox" aria-label="Two-Factor Authentication"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Save Login Info</h4><p>Remember your credentials on this device</p></div><label class="toggle"><input type="checkbox" aria-label="Save Login Info" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Data Analytics</h4><p>Allow personalized recommendations</p></div><label class="toggle"><input type="checkbox" aria-label="Data Analytics" checked><span class="toggle-slider"></span></label></div>
+            <div class="settings-actions">
+              <button class="btn-secondary btn-settings-action">Change Password</button>
+              <button class="btn-secondary btn-danger-action" onclick="signOut()">Sign Out All Devices</button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-panel" id="settings-appearance">
+          <div class="settings-section">
+            <div class="settings-section-title">Appearance</div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Dark Mode</h4><p>Currently enabled</p></div><label class="toggle"><input type="checkbox" aria-label="Dark Mode" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Compact View</h4><p>Show more products per row</p></div><label class="toggle"><input type="checkbox" aria-label="Compact View"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div class="toggle-info"><h4>Animations</h4><p>Enable page transition effects</p></div><label class="toggle"><input type="checkbox" aria-label="Animations" checked><span class="toggle-slider"></span></label></div>
+          </div>
+        </div>
+        <div class="settings-panel" id="settings-addresses">
+          <div class="settings-section">
+            <div class="settings-section-title">Saved Addresses</div>
+            <div class="saved-address-card">
+              <div class="saved-address-header">
+                <span class="saved-address-tag">HOME</span>
+                <button class="btn-secondary btn-settings-action">Edit</button>
+              </div>
+              <p class="saved-address-name" id="savedAddrName">—</p>
+              <p class="saved-address-text" id="savedAddrText">No address saved yet</p>
+            </div>
+            <button class="btn-secondary btn-settings-action">+ Add New Address</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT VIEW -->
+  <div class="view" id="view-contact">
+    <div class="page-container contact-page-container">
+      <div class="page-title">CONTACT US</div>
+      <p class="page-sub">We're here to help. Reach out anytime — proudly serving Misamis Occidental customers!</p>
+      <div class="contact-grid">
+        <div>
+          <div class="form-section">
+            <div class="form-section-title contact-section-title">Send a Message</div>
+            <div class="auth-form">
+              <div class="form-group">
+                <label for="contactName">Name</label>
+                <input type="text" id="contactName" placeholder="Your full name">
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email</label>
+                <input type="email" id="contactEmail" placeholder="your@email.com">
+              </div>
+              <div class="form-group">
+                <label for="contactSubject">Subject</label>
+                <select id="contactSubject" title="Select a subject" aria-label="Subject">
+                  <option>Order Issue</option>
+                  <option>Product Inquiry</option>
+                  <option>Returns &amp; Refunds</option>
+                  <option>General Inquiry</option>
+                  <option>Partnership</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" rows="5" placeholder="How can we help you?" class="contact-textarea"></textarea>
+              </div>
+              <button class="btn-primary btn-contact-send" onclick="sendMessage()">SEND MESSAGE →</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="form-section">
+            <div class="form-section-title contact-section-title">Find Us</div>
+            <div class="contact-info-list">
+              <div class="contact-info-row"><span class="contact-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Service Area</strong><p class="contact-info-text">Misamis Occidental only — Ozamiz City, Oroquieta City, Tangub City & all 13 municipalities</p></div></div>
+              <div class="contact-info-row"><span class="contact-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16h.19z"/></svg></span><div><strong>Phone / Viber</strong><p class="contact-info-text">+63 912 345 6789</p></div></div>
+              <div class="contact-info-row"><span class="contact-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><div><strong>Email</strong><p class="contact-info-text">hello@ljmsport.ph</p></div></div>
+              <div class="contact-info-row"><span class="contact-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><div><strong>Store Hours</strong><p class="contact-info-text">Mon–Sat: 9AM – 8PM<br>Sunday: 10AM – 6PM</p></div></div>
+            </div>
+            <div class="contact-social">
+              <div class="contact-social-label">Follow Us</div>
+              <div class="contact-social-btns">
+                <button class="btn-secondary btn-social" onclick="openSocial('Facebook')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</button>
+                <button class="btn-secondary btn-social" onclick="openSocial('Instagram')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</button>
+                <button class="btn-secondary btn-social" onclick="openSocial('TikTok')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg> TikTok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="productModal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close product details">✕</button>
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-brand" id="modalBrand"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div id="modalStockBanner"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-label">Size</div>
+      <div class="size-grid" id="modalSizes"></div>
+      <div class="modal-label">Quantity</div>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease quantity">−</button>
+        <span class="qty-num" id="modalQty">1</span>
+        <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase quantity">+</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary btn-modal-cart" id="modalAddBtn" onclick="addToCartFromModal()">ADD TO CART →</button>
+        <button class="btn-secondary btn-modal-wish" aria-label="Add to wishlist" onclick="toggleWishlist(currentModalProduct?.id,null);closeModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <div class="cart-title">YOUR CART</div>
+    <button class="cart-close" onclick="closeCart()" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-summary">
+      <div class="cart-row"><span>Subtotal</span><span id="cartSubtotal">₱0</span></div>
+      <div class="cart-row"><span>Shipping</span><span class="text-success">FREE</span></div>
+      <div class="cart-row total"><span>TOTAL</span><span id="cartTotal">₱0</span></div>
+    </div>
+    <button class="btn-primary btn-checkout" onclick="closeCart();nav('checkout')">CHECKOUT →</button>
+    <button class="btn-secondary btn-continue-shopping" onclick="closeCart();nav('shop')">CONTINUE SHOPPING</button>
+  </div>
+</div>
+<div class="overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<script src="ljmsport-supabase.js"></script>
+<script src="ljmsport.js"></script>
+<!-- SDK readiness guard: supabase.js loads the SDK async.
+     window.onload in ljmsport.js may fire before the SDK is ready.
+     This replaces window.onload with a polling wrapper. -->
+<script>
+(function() {
+  // Remove window.onload set by ljmsport.js and replace with a polled version
+  const _original = window.onload;
+  window.onload = null;
+  function waitAndInit() {
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+      if (typeof _original === 'function') _original();
+    } else {
+      setTimeout(waitAndInit, 80);
+    }
+  }
+  if (document.readyState === 'complete') {
+    waitAndInit();
+  } else {
+    window.addEventListener('load', waitAndInit);
+  }
+})();
+</script>
+</body>
+</html>

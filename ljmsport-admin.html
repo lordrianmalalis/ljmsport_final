@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LJMSport Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ljmsport-admin.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen active">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-mark">LJM</div>
+      <div>
+        <div class="login-brand">LJMSPORT</div>
+        <div class="login-tag">ADMIN PANEL · SECURE ACCESS</div>
+      </div>
+    </div>
+    <p class="login-desc">Sign in to manage the store. Authorized personnel only.</p>
+    <div class="form-group">
+      <label for="login-username">Username</label>
+      <input class="form-input" type="text" id="login-username" placeholder="e.g. owner / manager" autocomplete="username">
+    </div>
+    <div class="form-group form-group--relative">
+      <label for="login-password">Password</label>
+      <input class="form-input" type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')adminLogin()">
+      <span class="pw-toggle" onclick="togglePw()" role="button" tabindex="0" aria-label="Toggle password visibility">👁</span>
+    </div>
+    <div class="form-group">
+      <label for="login-role">Sign in as</label>
+      <select class="form-input" id="login-role" aria-label="Select role to sign in as">
+        <option value="owner">Owner (Full Access)</option>
+        <option value="manager">Store Manager</option>
+        <option value="staff">Staff (View Only)</option>
+      </select>
+    </div>
+    <button class="btn btn-accent btn-full-signin" onclick="adminLogin()">SIGN IN →</button>
+    <div id="login-error" class="login-error hidden">❌ Incorrect username or password.</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="admin-app" class="admin-app-hidden">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">LJM<span>SPORT</span></div>
+    <div class="tag">ADMIN v1.0</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Operations</div>
+    <div class="nav-item" onclick="showPage('orders',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Orders
+      <span class="nav-badge" id="nav-orders-badge">0</span>
+    </div>
+    <div class="nav-item" onclick="showPage('riders',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Riders
+    </div>
+    <div class="nav-item" onclick="showPage('products',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      Products
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">People</div>
+    <div class="nav-item" onclick="showPage('customers',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Customers
+    </div>
+    <div class="nav-item" onclick="showPage('feedbacks',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Feedbacks
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Settings</div>
+    <div class="nav-item" onclick="showPage('payments',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Payments
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="admin-chip" id="admin-chip">
+      <div class="admin-avatar" id="admin-avatar">O</div>
+      <div>
+        <div class="admin-name" id="admin-name-display">Owner</div>
+        <div class="admin-role-label" id="admin-role-display">OWNER</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-sm btn-signout" onclick="adminLogout()">Sign Out</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-left">
+      <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Toggle sidebar navigation" title="Toggle sidebar navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="page-title-bar" id="page-title-bar">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <div class="sync-dot" id="sync-dot" title="Live sync active"></div>
+      <div class="time-display" id="time-display">—</div>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Orders</div>
+          <div class="kpi-value" id="kpi-total">0</div>
+          <div class="kpi-sub" id="kpi-total-sub">All time</div>
+        </div>
+        <div class="kpi-card kpi-warn">
+          <div class="kpi-label">Pending</div>
+          <div class="kpi-value" id="kpi-pending">0</div>
+          <div class="kpi-sub">Need attention</div>
+        </div>
+        <div class="kpi-card kpi-info">
+          <div class="kpi-label">Out for Delivery</div>
+          <div class="kpi-value" id="kpi-ofd">0</div>
+          <div class="kpi-sub">Active riders</div>
+        </div>
+        <div class="kpi-card kpi-success">
+          <div class="kpi-label">Revenue Today</div>
+          <div class="kpi-value" id="kpi-revenue">₱0</div>
+          <div class="kpi-sub" id="kpi-revenue-sub">0 orders</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Orders</div>
+            <button class="btn btn-xs btn-ghost" onclick="showPage('orders',null)">View all →</button>
+          </div>
+          <div id="dash-recent-orders"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Online Riders</div>
+            <span class="status-dot online"></span>
+          </div>
+          <div id="dash-riders"></div>
+        </div>
+      </div>
+
+      <div class="card card--mt20">
+        <div class="card-header"><div class="card-title">Revenue (Last 7 Days)</div></div>
+        <div class="chart-wrap">
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="page" id="page-orders">
+      <div class="toolbar">
+        <div class="filter-tabs" id="order-filter-tabs">
+          <button class="ftab active" onclick="filterOrders('all',this)">All</button>
+          <button class="ftab" onclick="filterOrders('pending',this)">Pending</button>
+          <button class="ftab" onclick="filterOrders('processing',this)">Processing</button>
+          <button class="ftab" onclick="filterOrders('out_for_delivery',this)">Shipped</button>
+          <button class="ftab" onclick="filterOrders('delivered',this)">Delivered</button>
+          <button class="ftab" onclick="filterOrders('cancelled',this)">Cancelled</button>
+        </div>
+        <input class="search-input" type="text" placeholder="Search orders…" id="orders-search" oninput="searchOrders(this.value)">
+      </div>
+      <div class="card">
+        <table class="data-table" id="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Pay Status</th>
+              <th>Status</th>
+              <th>Rider</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody"></tbody>
+        </table>
+        <div id="orders-empty" class="empty-state hidden">No orders found.</div>
+      </div>
+    </div>
+
+    <!-- RIDERS -->
+    <div class="page" id="page-riders">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Registered Riders</div>
+          <button class="btn btn-accent btn-sm" onclick="openAddRiderModal()">+ Add Rider</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rider</th>
+              <th>Phone</th>
+              <th>Vehicle / Plate</th>
+              <th>Status</th>
+              <th>Current Order</th>
+              <th>Last Seen</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="riders-tbody"></tbody>
+        </table>
+        <div id="riders-empty" class="empty-state hidden">No riders registered yet. Click <strong>+ Add Rider</strong> to add your first rider.</div>
+      </div>
+    </div>
+
+    <!-- ADD / EDIT RIDER MODAL -->
+    <div id="rider-modal-overlay" class="modal-overlay hidden" onclick="if(event.target===this)closeRiderModal()">
+      <div class="modal" style="max-width:420px">
+        <div class="modal-header">
+          <div class="modal-order-id" id="rider-modal-title">Add New Rider</div>
+          <button class="btn btn-ghost btn-sm" onclick="closeRiderModal()">✕</button>
+        </div>
+        <div class="modal-section">
+          <div class="form-group">
+            <label class="form-label" style="font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px">Full Name</label>
+            <input class="form-input" type="text" id="rider-inp-name" placeholder="e.g. Pedro Santos">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px">Phone Number</label>
+            <input class="form-input" type="tel" id="rider-inp-phone" placeholder="+63 9XX XXX XXXX">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px">Plate / Vehicle</label>
+            <input class="form-input" type="text" id="rider-inp-plate" placeholder="e.g. ABC-1234 · Motorcycle">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px">4-Digit PIN <span style="color:var(--text3);font-size:11px;text-transform:none">(rider uses this to sign in)</span></label>
+            <input class="form-input" type="text" id="rider-inp-pin" placeholder="e.g. 1234" maxlength="4" inputmode="numeric">
+          </div>
+          <div id="rider-modal-error" class="login-error hidden" style="margin-top:4px"></div>
+        </div>
+        <div class="modal-actions-bar">
+          <button class="btn btn-ghost" onclick="closeRiderModal()">Cancel</button>
+          <button class="btn btn-accent" id="rider-save-btn" onclick="saveRider()">Save Rider</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="page" id="page-products">
+      <!-- Sub-tab bar -->
+      <div class="prod-subtabs">
+        <button class="prod-subtab active" id="subtab-products" onclick="switchProdTab('products')">📦 Products</button>
+        <button class="prod-subtab" id="subtab-stocks" onclick="switchProdTab('stocks')">📊 Stocks</button>
+      </div>
+
+      <!-- PRODUCTS SUB-TAB -->
+      <div id="prodtab-products" class="prodtab active">
+        <div class="toolbar">
+          <div class="filter-tabs" id="prod-filter-tabs">
+            <button class="ftab active" onclick="filterProducts('all',this)">All</button>
+            <button class="ftab" onclick="filterProducts('Basketball',this)">🏀 Basketball</button>
+            <button class="ftab" onclick="filterProducts('Soccer',this)">⚽ Soccer</button>
+            <button class="ftab" onclick="filterProducts('Volleyball',this)">🏐 Volleyball</button>
+            <button class="ftab" onclick="filterProducts('Running',this)">👟 Running</button>
+            <button class="ftab" onclick="filterProducts('Gym',this)">🏋️ Gym</button>
+            <button class="ftab" onclick="filterProducts('Accessories',this)">🎒 Accessories</button>
+          </div>
+          <button class="btn btn-accent btn-sm" onclick="openAddProductModal()">+ Add Product</button>
+        </div>
+        <div class="products-grid-admin" id="products-grid"></div>
+      </div>
+
+      <!-- STOCKS SUB-TAB -->
+      <div id="prodtab-stocks" class="prodtab">
+        <div class="toolbar">
+          <input class="search-input" type="text" placeholder="Search products…" id="stock-search" oninput="filterStockList(this.value)">
+          <div class="stock-summary-text" id="stock-summary"></div>
+        </div>
+        <div class="card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Total Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="stock-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div class="page" id="page-customers">
+      <div class="toolbar">
+        <input class="search-input" type="text" placeholder="Search customers…" id="customers-search" oninput="searchCustomers(this.value)">
+      </div>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Orders</th>
+              <th>Total Spent</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody"></tbody>
+        </table>
+        <div id="customers-empty" class="empty-state hidden">No customers yet.</div>
+      </div>
+    </div>
+
+    <!-- FEEDBACKS -->
+    <div class="page" id="page-feedbacks">
+      <div class="toolbar">
+        <div class="filter-tabs">
+          <button class="ftab active" onclick="filterFeedbacks('all',this)">All</button>
+          <button class="ftab" onclick="filterFeedbacks('product',this)">Product</button>
+          <button class="ftab" onclick="filterFeedbacks('delivery',this)">Delivery</button>
+        </div>
+      </div>
+      <div id="feedbacks-list"></div>
+      <div id="feedbacks-empty" class="empty-state hidden">No feedbacks yet.</div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="page" id="page-payments">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Payment Methods</div></div>
+        <div id="payments-list"></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+</div><!-- /admin-app -->
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="order-modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-order-id" id="modal-order-id">#LJM-000000</div>
+        <div class="modal-order-time" id="modal-order-time">—</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- CUSTOMER MODAL -->
+<div class="modal-overlay hidden" id="cust-modal-overlay" onclick="if(event.target===this)closeCustModal()">
+  <div class="modal" id="cust-modal">
+    <div class="modal-header">
+      <div class="modal-order-id" id="cust-modal-name">Customer</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeCustModal()" aria-label="Close customer modal" title="Close">✕</button>
+    </div>
+    <div id="cust-modal-body"></div>
+  </div>
+</div>
+
+<!-- ADD/EDIT PRODUCT MODAL -->
+<div class="modal-overlay hidden" id="prod-modal-overlay" onclick="if(event.target===this)closeProdModal()">
+  <div class="modal" id="prod-modal">
+    <div class="modal-header">
+      <div class="modal-order-id" id="prod-modal-title">Add Product</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeProdModal()">✕ Close</button>
+    </div>
+    <div class="modal-section">
+      <!-- Image upload row -->
+      <div class="form-group form-group--full" style="margin-bottom:16px">
+        <label>Product Image</label>
+        <div class="prod-img-upload-wrap" id="prod-img-wrap" onclick="document.getElementById('prod-img-file').click()">
+          <div class="prod-img-preview" id="prod-img-preview">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Click to upload image</span>
+            <span style="font-size:11px;color:var(--text3)">JPG, PNG, WEBP · Max 2MB</span>
+          </div>
+        </div>
+        <input type="file" id="prod-img-file" accept="image/*" style="display:none" onchange="onProdImageSelected(this)">
+        <div id="prod-img-status" style="font-size:12px;margin-top:6px;color:var(--text3)"></div>
+        <input type="hidden" id="prod-img-url" value="">
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label for="prod-emoji">Emoji / Icon (fallback)</label><input class="form-input" type="text" id="prod-emoji" placeholder="⚽" maxlength="4"></div>
+        <div class="form-group"><label for="prod-cat">Category</label>
+          <select class="form-input" id="prod-cat" aria-label="Select product category" onchange="onCatChange(this.value)">
+            <option>Basketball</option><option>Soccer</option><option>Volleyball</option>
+            <option>Running</option><option>Gym</option><option>Accessories</option>
+          </select>
+        </div>
+        <div class="form-group form-group--full"><label for="prod-name">Product Name</label><input class="form-input" type="text" id="prod-name" placeholder="e.g. Elite Strike Football"></div>
+        <div class="form-group"><label for="prod-brand">Brand</label><input class="form-input" type="text" id="prod-brand" placeholder="e.g. Nike"></div>
+        <div class="form-group"><label for="prod-price">Price (₱)</label><input class="form-input" type="number" id="prod-price" placeholder="0" min="0"></div>
+        <div class="form-group"><label for="prod-old-price">Old Price (₱) — optional</label><input class="form-input" type="number" id="prod-old-price" placeholder="Leave blank if none" min="0"></div>
+        <div class="form-group"><label for="prod-badge">Badge</label>
+          <select class="form-input" id="prod-badge" aria-label="Select product badge">
+            <option value="">None</option><option value="NEW">NEW</option>
+            <option value="SALE">SALE</option><option value="HOT">HOT</option>
+          </select>
+        </div>
+        <div class="form-group form-group--full"><label for="prod-desc">Description</label><textarea class="form-input textarea-resize-v" id="prod-desc" rows="3" placeholder="Describe the product…"></textarea></div>
+        <div class="form-group form-group--full">
+          <label for="prod-sizes">Sizes <span style="font-weight:400;color:var(--text3);font-size:11px">— comma separated, e.g. S, M, L, XL</span></label>
+          <input class="form-input" type="text" id="prod-sizes" placeholder="e.g. US 7, US 8, US 9" autocomplete="off">
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions-bar">
+      <button class="btn btn-accent btn-sm" id="prod-save-btn" onclick="saveProduct()">💾 Save Product</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeProdModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- STOCK MODAL -->
+<div class="modal-overlay hidden" id="stock-modal-overlay" onclick="if(event.target===this)closeStockModal()">
+  <div class="modal" id="stock-modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-order-id" id="stock-modal-title">Stock Management</div>
+        <div class="modal-order-time" id="stock-modal-sub">—</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeStockModal()">✕ Close</button>
+    </div>
+    <div class="modal-section">
+      <div class="stock-header-row">
+        <div>
+          <div class="stock-total-label">Total Units</div>
+          <div class="stock-total-value" id="stock-total-display">0</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="setAllSizes()">Set All Sizes at Once</button>
+      </div>
+      <div class="modal-section-title">Stock per Size</div>
+      <div id="stock-sizes-wrap"></div>
+    </div>
+    <div class="modal-actions-bar">
+      <button class="btn btn-accent btn-sm" onclick="saveStock()">💾 Save Stock</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeStockModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sidebar-overlay" onclick="closeSidebarOverlay()"></div>
+
+<script src="ljmsport-supabase.js"></script>
+<script src="ljmsport-admin.js"></script>
+<script>
+// SDK readiness guard: supabase.js loads the SDK async.
+// DOMContentLoaded in admin.js may fire before the SDK is ready.
+(function() {
+  const _orig = window._adminDOMReady;
+  // Intercept: re-run db_getAdmins once SDK is confirmed ready
+  function waitAndPreload() {
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+      if (typeof db_getAdmins === 'function') {
+        db_getAdmins().then(accounts => {
+          if (accounts.length) window.ADMIN_ACCOUNTS = accounts;
+        });
+      }
+    } else {
+      setTimeout(waitAndPreload, 80);
+    }
+  }
+  waitAndPreload();
+})();
+</script>
+</body>
+</html>
